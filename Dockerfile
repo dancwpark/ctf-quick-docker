@@ -60,6 +60,7 @@ RUN python3 -m pip install --user angr
 RUN python3 -m pip install --user unicorn
 RUN python3 -m pip install --user capstone
 RUN python3 -m pip install --user ropper
+RUN python3 -m pip install --user keystone-engine
 
 # keystone
 #RUN git clone https://github.com/keystone-engine/keystone.git
@@ -82,21 +83,20 @@ ENV LC_CTYPE=C.UTF-8
 # one_gadget
 RUN sudo gem install one_gadget
 
-# binwalk
-USER root
+# binwalk # Doesn't work atm
+#USER root
 # TODO: JANK JANK JANK
-ENV TZ=America/New_York
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-USER sejong
-RUN sudo apt-get install -y binwalk
-
+#ENV TZ=America/New_York
+#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+#USER sejong
+#RUN sudo apt-get install -y binwalk
 
 
 
 WORKDIR /home/sejong
 
-# checksec
-RUN git clone https://github.com/slimm609/checksec.sh.git
-ENV PATH="/home/sejong/checksec.sh:${PATH}"
+# checksec # meh, not needed
+#RUN git clone https://github.com/slimm609/checksec.sh.git
+#ENV PATH="/home/sejong/checksec.sh:${PATH}"
 
 RUN sudo apt install -y ipython

@@ -1,5 +1,6 @@
 # ctf-docker
-
+build:
+docker build -t sejong -f Dockerfile .
 
 run:
 * Get in directory
