@@ -1,7 +1,8 @@
-# ctf-docker
+# repwn environment setup
 build:
 docker build -t sejong -f Dockerfile .
 
 run:
-* Get in directory
-`docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it --rm -v"$(pwd):/home/sejong/challenge" --name sejong sejong`
+* Get in wanted directory
+`docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it --rm -v"$(pwd):/home/sejong/mission" --name sejong sejong`
+* I usually add this to my `.zshrc` as an alias.
