@@ -40,6 +40,10 @@ RUN useradd -m sejong
 RUN echo "sejong ALL=NOPASSWD: ALL" > /etc/sudoers
 USER sejong
 
+# Copy tmux.conf
+#RUN cp tmux.conf $HOME/.tmux.conf
+ADD .tmux.conf $HOME/home/sejong
+
 # tools
 WORKDIR /tools
 RUN sudo chown sejong /tools/
