@@ -1,5 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND=noninteractive
 
 # General Tools
 RUN apt-get update
@@ -12,11 +13,11 @@ vim \
 curl \
 wget \
 python \
+python3 \
 git \
 unzip \
 sudo \
 gdb \
-python-pip \
 python3-pip \
 tmux \
 qemu \
@@ -36,17 +37,17 @@ libcapnp-dev \
 ruby-dev
 
 # Create user
-RUN useradd -m sejong
-RUN echo "sejong ALL=NOPASSWD: ALL" > /etc/sudoers
-USER sejong
+RUN useradd -m prkcw
+RUN echo "prkcw ALL=NOPASSWD: ALL" > /etc/sudoers
+USER prkcw
 
 # Copy tmux.conf
 #RUN cp tmux.conf $HOME/.tmux.conf
-ADD .tmux.conf $HOME/home/sejong
+ADD .tmux.conf $HOME/home/prkcw
 
 # tools
 WORKDIR /tools
-RUN sudo chown sejong /tools/
+RUN sudo chown prkcw /tools/
 
 # Install rust
 WORKDIR /tools
@@ -56,7 +57,7 @@ RUN ./setup.sh -y
 ENV PATH="/home/sejong/.cargo/bin:${PATH}"
 
 # Python packages
-WORKDIR /home/sejong
+WORKDIR /home/prkcw
 RUN python3 -m pip install --user pwntools
 RUN python3 -m pip install --user angr
 
@@ -66,41 +67,11 @@ RUN python3 -m pip install --user capstone
 RUN python3 -m pip install --user ropper
 RUN python3 -m pip install --user keystone-engine
 
-# keystone
-#RUN git clone https://github.com/keystone-engine/keystone.git
-#RUN mkdir keystone/build
-#WORKDIR /home/sejong/keystone/build
-#RUN ../make-share.sh
-#RUN sudo make install
-#USER root
-#RUN echo "include /usr/local/lib" >> /etc/ld.so.conf
-#USER sejong
-#RUN sudo ldconfig
-#WORKDIR /home/keystone/bindings/python
-#RUN sudo make install
-#RUN sudo make install3
-
-# install GEF
+# install GEF -- maybe use pwndbg? hmmm :\
 RUN wget -q -O- https://github.com/hugsy/gef/raw/master/scripts/gef.sh | sh
 ENV LC_CTYPE=C.UTF-8
 
 # one_gadget
 RUN sudo gem install one_gadget
 
-# binwalk # Doesn't work atm
-#USER root
-# TODO: JANK JANK JANK
-#ENV TZ=America/New_York
-#RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-#USER sejong
-#RUN sudo apt-get install -y binwalk
-
-
-
-WORKDIR /home/sejong
-
-# checksec # meh, not needed
-#RUN git clone https://github.com/slimm609/checksec.sh.git
-#ENV PATH="/home/sejong/checksec.sh:${PATH}"
-
-RUN sudo apt install -y ipython
+WORKDIR /home/prkcw
