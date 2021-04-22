@@ -1,6 +1,6 @@
 # CTF Docker Setup
 For those confusing times when you want to CTF but didn't prepare at all (not that
-that has ever happened to me... :'(... )
+that has ever happened to me... 😅 ... )
 
 
 ## Build
