@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -11,12 +11,25 @@ g++ \
 gcc \
 vim \
 curl \
+procps \
+binutils \
+file \
+checksec \
 wget \
-python \
 python3 \
 git \
 unzip \
 sudo \
+mtd-utils \
+gzip \
+bzip2 \
+tar \
+arj \
+lhasa \
+p7zip \
+p7zip-full \
+cabextract \
+cramf \
 gdb \
 python3-pip \
 tmux \
@@ -61,17 +74,39 @@ ENV PATH="/home/user/.cargo/bin:${PATH}"
 WORKDIR /home/user
 RUN python3 -m pip install --user pwntools
 RUN python3 -m pip install --user angr
+RUN python3 -m pip install --user nose
+RUN python3 -m pip install coverage
+RUN python3 -m pip install pycryptodome
 
 # gef dependencies
 RUN python3 -m pip install --user unicorn
 RUN python3 -m pip install --user capstone
 RUN python3 -m pip install --user ropper
 RUN python3 -m pip install --user keystone-engine
+RUN python3 -m pip install --user filebytes
 
 # install pwndbg
 RUN git clone https://github.com/pwndbg/pwndbg $HOME/.pwndbg && \
     cd $HOME/.pwndbg && \
     ./setup.sh
+WORKDIR $HOME
+
+# install binwalk
+RUN git clone https://github.com/ReFirmLabs/binwalk $HOME/.binwalk && \
+    cd $HOME/.binwalk && \
+    python3 setup.py install
+WORKDIR $HOME
+
+# install pwninit
+RUN git clone https://github.com/io12/pwninit $HOME/.pwninit && \
+    cd $HOME/.pwninit && \
+    cargo install pwninit
+WORKDIR $HOME
+
+# install ropper
+RUN git clone https://github.com/sashs/Ropper $HOME/.ropper && \
+    cd $HOME/.ropper && \
+    python3 setup.py install
 WORKDIR $HOME
 
 # one_gadget
