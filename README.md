@@ -2,6 +2,7 @@
 For those confusing times when you want to CTF but didn't prepare at all (not that
 that has ever happened to me... 😅 ... )
 
+*Currently testing on Ubuntu 22.04.03 LTS x86_64*
 
 ## Build
 docker build -t ctf -f Dockerfile .

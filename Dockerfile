@@ -5,49 +5,51 @@ ENV DEBIAN_FRONTEND=noninteractive
 # General Tools
 RUN apt-get update
 RUN apt-get install -y \ 
-build-essential \
-libtool \
-g++ \
-gcc \
-vim \
-curl \
-procps \
-binutils \
-file \
-checksec \
-wget \
-python3 \
-git \
-unzip \
-sudo \
-mtd-utils \
-gzip \
-bzip2 \
-tar \
 arj \
+binutils \
+build-essential \
+bzip2 \
+cabextract \
+capnproto \
+ccache \
+checksec \
+clang \
+cmake \
+coreutils \
+curl \
+file \
+g++ \
+g++-multilib \
+gcc \
+gcc-multilib \
+gdb \
+git \
+gzip \
 lhasa \
+libcapnp-dev \
+libtool \
+liblzma-dev \
+libssl-dev \
+make \
+manpages-dev \
+mtd-utils \
+ninja-build \
+openssl \
 p7zip \
 p7zip-full \
-cabextract \
-cramf \
-gdb \
-python3-pip \
-tmux \
-qemu \
-clang \
-ccache \
-cmake \
-make \
-g++-multilib \
-gcc-multilib \
 pkg-config \
-coreutils \
+procps \
+python3 \
 python3-pexpect \
-manpages-dev \
-ninja-build \
-capnproto \
-libcapnp-dev \
-ruby-dev
+python3-pip \
+qemu \
+ruby-dev \
+sudo \
+tar \
+tmux \
+unzip \
+vim \
+wget
 
 # Create user
 RUN useradd -m user
@@ -55,7 +57,6 @@ RUN echo "user ALL=NOPASSWD: ALL" > /etc/sudoers
 USER user
 
 # Copy configuration files 
-#RUN cp tmux.conf $HOME/.tmux.conf
 ADD .vimrc $HOME
 ADD .tmux.conf $HOME
 
@@ -75,8 +76,9 @@ WORKDIR /home/user
 RUN python3 -m pip install --user pwntools
 RUN python3 -m pip install --user angr
 RUN python3 -m pip install --user nose
-RUN python3 -m pip install coverage
-RUN python3 -m pip install pycryptodome
+RUN python3 -m pip install --user coverage
+RUN python3 -m pip install --user pycryptodome
+RUN python3 -m pip install --user binwalk
 
 # gef dependencies
 RUN python3 -m pip install --user unicorn
@@ -89,12 +91,6 @@ RUN python3 -m pip install --user filebytes
 RUN git clone https://github.com/pwndbg/pwndbg $HOME/.pwndbg && \
     cd $HOME/.pwndbg && \
     ./setup.sh
-WORKDIR $HOME
-
-# install binwalk
-RUN git clone https://github.com/ReFirmLabs/binwalk $HOME/.binwalk && \
-    cd $HOME/.binwalk && \
-    python3 setup.py install
 WORKDIR $HOME
 
 # install pwninit
