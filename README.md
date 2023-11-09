@@ -1,8 +1,5 @@
 # CTF Docker Setup
-For those confusing times when you want to CTF but didn't prepare at all (not that
-that has ever happened to me... 😅 ... )
-
-*Currently testing on Ubuntu 22.04.03 LTS x86_64*
+*Tested on Ubuntu 22.04.03 LTS x86_64*
 
 ## Build
 docker build -t ctf -f Dockerfile .
@@ -11,3 +8,6 @@ docker build -t ctf -f Dockerfile .
 * `cd $challenge\_dir`
 * `docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -it --rm -v"$(pwd):/home/user/chall" --name ctf ctf`
   * I usually add this to my [bash|zsh]rc as an alias
+
+## Stats
+* 3.77 GB image size

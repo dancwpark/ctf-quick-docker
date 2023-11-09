@@ -79,6 +79,7 @@ RUN python3 -m pip install --user nose
 RUN python3 -m pip install --user coverage
 RUN python3 -m pip install --user pycryptodome
 RUN python3 -m pip install --user binwalk
+RUN python3 -m pip install --user ropper
 
 # gef dependencies
 RUN python3 -m pip install --user unicorn
@@ -97,12 +98,6 @@ WORKDIR $HOME
 RUN git clone https://github.com/io12/pwninit $HOME/.pwninit && \
     cd $HOME/.pwninit && \
     cargo install pwninit
-WORKDIR $HOME
-
-# install ropper
-RUN git clone https://github.com/sashs/Ropper $HOME/.ropper && \
-    cd $HOME/.ropper && \
-    python3 setup.py install
 WORKDIR $HOME
 
 # one_gadget
