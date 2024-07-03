@@ -4,6 +4,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # General Tools
 RUN apt-get update
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone && \
+    apt-get update && \
+    apt-get install -y locales && \
+    rm -rf /var/lib/apt/lists/* && \
+    localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 && \
+    apt-get update && \
+    apt-get install -y vim
 RUN apt-get install -y \ 
 arj \
 binutils \
@@ -89,9 +97,10 @@ RUN python3 -m pip install --user keystone-engine
 RUN python3 -m pip install --user filebytes
 
 # install pwndbg
-RUN git clone https://github.com/pwndbg/pwndbg $HOME/.pwndbg && \
-    cd $HOME/.pwndbg && \
-    ./setup.sh
+RUN git clone --depth 2 https://github.com/pwndbg/pwndbg -b dev $HOME/.pwndbg
+WORKDIR /home/user/.pwndbg
+RUN chmod +x setup.sh
+RUN ./setup.sh
 WORKDIR $HOME
 
 # install pwninit

@@ -10,4 +10,4 @@ docker build -t ctf -f Dockerfile .
   * I usually add this to my [bash|zsh]rc as an alias
 
 ## Stats
-* 3.77 GB image size
+* 4.16 GB image size
